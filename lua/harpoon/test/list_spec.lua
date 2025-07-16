@@ -22,11 +22,16 @@ describe("list", function()
         })
         local list_config = Config.get_config(config, "foo")
 
-        local list = List.decode(list_config, "foo", { "foo:bar", "baz:qux" })
+        local list = List.decode(list_config, "foo", {
+            "foo:bar",
+            nil,
+            [3] = "baz:qux",
+        })
         local displayed = list:display()
 
         eq(displayed, {
             "foo---bar",
+            "",
             "baz---qux",
         })
     end)
@@ -191,6 +196,16 @@ describe("list", function()
         eq({
             { value = "one" },
         }, list.items)
+    end)
+
+    it("remove #653 bug", function()
+        local config = Config.merge_config()
+        local c = Config.get_config(config, "foo")
+        local list = List:new(c, "foo", {
+            { value = "one" },
+        })
+        list:remove_at(1)
+        eq(0, list:length())
     end)
 
     it("remove_at", function()

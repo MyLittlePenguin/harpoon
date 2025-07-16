@@ -258,6 +258,14 @@ harpoon:extend({
 })
 ```
 
+### Builtin Extensions
+Highlight current file in the harpoon buffer list
+
+```lua
+local harpoon_extensions = require("harpoon.extensions")
+harpoon:extend(harpoon_extensions.builtins.highlight_current_file())
+```
+
 ### Highlight Groups
 TODO: Fill in the idea that we will emit out window information
 
